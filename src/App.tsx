@@ -1,8 +1,12 @@
 import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Index from './pages/Index';
 
 const App: React.FC = () => {
   return (
-    <p>Hello, world</p>
+    <BrowserRouter>
+      <Route path="/" exact component={Index} />
+    </BrowserRouter>
   );
 }
 
