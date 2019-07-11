@@ -14,6 +14,7 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import { FaMapMarkerAlt, FaUser } from 'react-icons/fa';
+import { NavLink as RouterNavLink } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
@@ -22,26 +23,26 @@ const Header: React.FC = () => {
   return (
     <Navbar color="dark" dark expand="md">
       <Container>
-        <NavbarBrand href="/">SES Availability</NavbarBrand>
+        <NavbarBrand tag={RouterNavLink} to="/">SES Availability</NavbarBrand>
         <NavbarToggler onClick={toggleOpen} />
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar>
             <NavItem>
-              <NavLink href="/">Home</NavLink>
+              <NavLink tag={RouterNavLink} to="/" exact>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/member">Member</NavLink>
+              <NavLink tag={RouterNavLink} to="/member">Member</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>Unit</DropdownToggle>
               <DropdownMenu>
-                <DropdownItem href="/unit/storm">
+                <DropdownItem tag={RouterNavLink} to="/unit/storm">
                   Storm and Support
                 </DropdownItem>
-                <DropdownItem href="/unit/rescue">
+                <DropdownItem tag={RouterNavLink} to="/unit/rescue">
                   Rescue
                 </DropdownItem>
-                <DropdownItem href="/unit/statistics">
+                <DropdownItem tag={RouterNavLink} to="/unit/statistics">
                   Statistics
                 </DropdownItem>
               </DropdownMenu>
