@@ -1,3 +1,4 @@
+import logo from '../assets/logo.svg';
 import React, { useState } from 'react';
 import {
   Collapse,
@@ -23,7 +24,9 @@ const Header: React.FC = () => {
   return (
     <Navbar color="dark" dark expand="md">
       <Container>
-        <NavbarBrand tag={RouterNavLink} to="/">SES Availability</NavbarBrand>
+        <NavbarBrand tag={RouterNavLink} to="/">
+          <img src={logo} alt="SES Logo" /> SES Availability
+        </NavbarBrand>
         <NavbarToggler onClick={toggleOpen} />
         <Collapse isOpen={isOpen} navbar>
           <Nav navbar>

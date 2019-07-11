@@ -1,1 +1,8 @@
 @import "~bootstrap/scss/bootstrap.scss";
+
+.navbar-brand img {
+  display: inline-block;
+  margin-right: 2px;
+  margin-top: 5px;
+  vertical-align: top;
+}
