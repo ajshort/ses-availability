@@ -32,6 +32,20 @@ const Header: React.FC = () => {
             <NavItem>
               <NavLink href="/member">Member</NavLink>
             </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>Unit</DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem href="/unit/storm">
+                  Storm and Support
+                </DropdownItem>
+                <DropdownItem href="/unit/rescue">
+                  Rescue
+                </DropdownItem>
+                <DropdownItem href="/unit/statistics">
+                  Statistics
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
           <Nav navbar className="ml-auto">
             <UncontrolledDropdown nav inNavbar>
