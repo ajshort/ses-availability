@@ -17,7 +17,6 @@ import {
   Table,
 } from 'reactstrap';
 import { FaBolt, FaExclamationTriangle } from 'react-icons/fa';
-import Header from '../components/Header';
 
 type StormAvailable = boolean | undefined;
 type RescueAvailable = 'immediate' | 'support' | 'unavailable' | undefined;
@@ -148,7 +147,6 @@ const Member: React.FC = () => {
 
   return (
     <>
-      <Header />
       <Container className="my-3">
         <div className="d-md-flex flex-md-row justify-content-md-between">
           <div>

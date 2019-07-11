@@ -1,8 +1,7 @@
 import React from 'react';
-import Header from '../components/Header';
 
 const Index: React.FC = () => (
-  <Header />
+  <p>Hello, world</p>
 );
 
 export default Index;
