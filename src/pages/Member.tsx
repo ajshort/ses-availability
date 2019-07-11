@@ -1,6 +1,8 @@
-import React, { useState, Children } from 'react';
+import React, { useState } from 'react';
 import {
+  Badge,
   Button,
+  ButtonGroup,
   Col,
   Container,
   CustomInput,
@@ -12,8 +14,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalProps,
-  ButtonGroup,
+  Table,
 } from 'reactstrap';
+import { FaBolt, FaExclamationTriangle } from 'react-icons/fa';
 import Header from '../components/Header';
 
 type StormAvailable = boolean | undefined;
@@ -120,7 +123,7 @@ const EditModal: React.FC<ModalProps> = (props) => {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="note" sm={3}>Additional note</Label>
+            <Label for="note" sm={3}>Note</Label>
             <Col sm={9}>
               <Input
                 type="text"
@@ -140,15 +143,86 @@ const EditModal: React.FC<ModalProps> = (props) => {
 };
 
 const Member: React.FC = () => {
-  const [isEditing, setEditing] = useState(true);
+  const [isEditing, setEditing] = useState(false);
   const toggleEditing = () => setEditing(!isEditing);
 
   return (
     <>
       <Header />
       <Container className="my-3">
-        <h1>Member Name</h1>
-        <p className="lead">Week of 1st July 2019</p>
+        <div className="d-md-flex flex-md-row justify-content-md-between">
+          <div>
+            <h1>Member Name</h1>
+            <p className="lead">Week of 1st July 2019</p>
+          </div>
+          <div className="mb-1">
+            <Button color="primary" onClick={toggleEditing}>Edit Availability</Button>
+          </div>
+        </div>
+        <Table className="member-availability">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>0600 - 1200</th>
+              <th>1200 - 1800</th>
+              <th>1800 - 0600</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Mon 1st July</td>
+              <td className="table-secondary"></td>
+              <td className="table-secondary"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Tue 2st July</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Wed 3st July</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Thu 4st July</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Fri 5th July</td>
+              <td>
+                <Badge color="success"><FaBolt /></Badge>
+                <Badge color="warning"><FaExclamationTriangle /></Badge>
+                <Badge color="success"><FaExclamationTriangle /> (WOL43)</Badge>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Sat 6th July</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Sun 7th July</td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Mon 8th July</td>
+              <td></td>
+              <td></td>
+              <td className="table-secondary"></td>
+            </tr>
+          </tbody>
+        </Table>
       </Container>
       <EditModal isOpen={isEditing} toggle={toggleEditing} />
     </>
