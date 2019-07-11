@@ -1,4 +1,6 @@
+import moment, { Moment } from 'moment';
 import React, { useState } from 'react';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 import {
   Badge,
   Button,
@@ -14,11 +16,69 @@ import {
   ModalFooter,
   ModalHeader,
   ModalProps,
+  Row,
   Table,
 } from 'reactstrap';
-import { FaBolt, FaExclamationTriangle } from 'react-icons/fa';
 
-type StormAvailable = boolean | undefined;
+interface ShiftsTableProps {
+  days: Array<{ date: Moment }>;
+  shifts: Array<{ label: string; }>;
+}
+
+const ShiftsTable: React.FC<ShiftsTableProps> = ({ days, shifts }) => (
+  <Table className="shifts-select-table">
+    <thead>
+      <tr>
+        <th />
+        {days.map(({ date }) => (
+          <th key={date.unix()}>
+            {date.format('ddd D/M')}
+          </th>
+        ))}
+      </tr>
+    </thead>
+    <tbody>
+      {shifts.map(shift => (
+        <tr key={shift.label}>
+          <th>{shift.label}</th>
+          {days.map(({ date }) => (
+            <th key={date.unix()}>
+              <Label check>
+                <input type="checkbox" />
+              </Label>
+            </th>
+          ))}
+        </tr>
+      ))}
+    </tbody>
+  </Table>
+);
+
+const TimesTable: React.FC = () => (
+  <Table>
+    <thead>
+      <tr>
+        <th>From</th>
+        <th>To</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><Input type="datetime-local" /></td>
+        <td><Input type="datetime-local" /></td>
+        <td><Button color="danger"><FaMinus /></Button></td>
+      </tr>
+      <tr>
+        <td><Input type="datetime-local" /></td>
+        <td><Input type="datetime-local" /></td>
+        <td><Button color="danger"><FaMinus /></Button></td>
+      </tr>
+    </tbody>
+  </Table>
+);
+
+type StormAvailable = 'available' | 'unavailable' | undefined;
 type RescueAvailable = 'immediate' | 'support' | 'unavailable' | undefined;
 
 const EditModal: React.FC<ModalProps> = (props) => {
@@ -28,8 +88,7 @@ const EditModal: React.FC<ModalProps> = (props) => {
   const [note, setNote] = useState('');
 
   return (
-    <Modal size="lg" {...props}>
-      <ModalHeader toggle={props.toggle}>Edit Availability</ModalHeader>
+    <Modal size="xl" {...props}>
       <ModalBody>
           <FormGroup row>
             <Label sm={3}>Enter availability for</Label>
@@ -59,23 +118,37 @@ const EditModal: React.FC<ModalProps> = (props) => {
               </ButtonGroup>
             </Col>
           </FormGroup>
+          {ui === 'shifts' && (
+            <Row>
+              <Col sm={9} className="offset-sm-3">
+                <ShiftsTable days={props.days} shifts={props.shifts} />
+              </Col>
+            </Row>
+          )}
+          {ui === 'times' && (
+            <Row>
+              <Col sm={9} className="offset-sm-3">
+                <TimesTable />
+              </Col>
+            </Row>
+          )}
           <FormGroup row>
             <Label sm={3}>Storm and support</Label>
             <Col sm={9}>
               <ButtonGroup>
                 <Button
                   color="success"
-                  outline={storm !== true}
-                  onClick={() => setStorm(storm === true ? undefined : true)}
+                  outline={storm !== 'available'}
+                  onClick={() => setStorm(storm === 'available' ? undefined : 'available')}
                 >
-                  Yes
+                  Available
                 </Button>
                 <Button
                   color="danger"
-                  outline={storm !== false}
-                  onClick={() => setStorm(storm === false ? undefined : false)}
+                  outline={storm !== 'unavailable'}
+                  onClick={() => setStorm(storm === 'unavailable' ? undefined : 'unavailable')}
                 >
-                  No
+                  Unavailable
                 </Button>
               </ButtonGroup>
             </Col>
@@ -118,6 +191,7 @@ const EditModal: React.FC<ModalProps> = (props) => {
                 disabled={rescue !== 'immediate' && rescue !== 'support'}
               >
                 <option value="">none</option>
+                <option>WOL43</option>
               </CustomInput>
             </Col>
           </FormGroup>
@@ -141,9 +215,34 @@ const EditModal: React.FC<ModalProps> = (props) => {
   );
 };
 
+interface Props {
+  days: Array<{ date: Moment; }>;
+}
+
+const MemberAvailabilityTable: React.FC<Props> = ({ days }) => (
+  null
+);
+
 const Member: React.FC = () => {
   const [isEditing, setEditing] = useState(false);
   const toggleEditing = () => setEditing(!isEditing);
+
+  const days = [
+    { date: moment('2019-07-01') },
+    { date: moment('2019-07-02') },
+    { date: moment('2019-07-03') },
+    { date: moment('2019-07-04') },
+    { date: moment('2019-07-05') },
+    { date: moment('2019-07-06') },
+    { date: moment('2019-07-07') },
+    { date: moment('2019-07-08') },
+  ];
+
+  const shifts = [
+    { label: '0600 - 1200' },
+    { label: '1200 - 1800' },
+    { label: '1800 - 0600' },
+  ];
 
   return (
     <>
@@ -157,72 +256,16 @@ const Member: React.FC = () => {
             <Button color="primary" onClick={toggleEditing}>Edit Availability</Button>
           </div>
         </div>
-        <Table className="member-availability">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>0600 - 1200</th>
-              <th>1200 - 1800</th>
-              <th>1800 - 0600</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mon 1st July</td>
-              <td className="table-secondary"></td>
-              <td className="table-secondary"></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Tue 2st July</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Wed 3st July</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Thu 4st July</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Fri 5th July</td>
-              <td>
-                <Badge color="success"><FaBolt /></Badge>
-                <Badge color="warning"><FaExclamationTriangle /></Badge>
-                <Badge color="success"><FaExclamationTriangle /> (WOL43)</Badge>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Sat 6th July</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Sun 7th July</td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Mon 8th July</td>
-              <td></td>
-              <td></td>
-              <td className="table-secondary"></td>
-            </tr>
-          </tbody>
-        </Table>
+        <MemberAvailabilityTable
+          days={days}
+        />
       </Container>
-      <EditModal isOpen={isEditing} toggle={toggleEditing} />
+      <EditModal
+        isOpen={isEditing}
+        toggle={toggleEditing}
+        days={days}
+        shifts={shifts}
+      />
     </>
   );
 };
