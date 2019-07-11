@@ -13,6 +13,7 @@ import {
   NavLink,
   UncontrolledDropdown,
 } from 'reactstrap';
+import { FaMapMarkerAlt, FaUser } from 'react-icons/fa';
 
 const Header: React.FC = () => {
   const [isOpen, setOpen] = useState(false);
@@ -35,7 +36,7 @@ const Header: React.FC = () => {
           <Nav navbar className="ml-auto">
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Wollongong City
+              <FaMapMarkerAlt /> Wollongong City
               </DropdownToggle>
               <DropdownMenu>
                 <DropdownItem>
@@ -48,7 +49,7 @@ const Header: React.FC = () => {
             </UncontrolledDropdown>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Member Name
+                <FaUser /> Member Name
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>Log Out</DropdownItem>
