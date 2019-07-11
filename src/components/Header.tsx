@@ -2,12 +2,16 @@ import React, { useState } from 'react';
 import {
   Collapse,
   Container,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
   Nav,
   Navbar,
   NavbarBrand,
   NavbarToggler,
   NavItem,
   NavLink,
+  UncontrolledDropdown,
 } from 'reactstrap';
 
 const Header: React.FC = () => {
@@ -27,6 +31,29 @@ const Header: React.FC = () => {
             <NavItem>
               <NavLink href="/member">Member</NavLink>
             </NavItem>
+          </Nav>
+          <Nav navbar className="ml-auto">
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Wollongong City
+              </DropdownToggle>
+              <DropdownMenu>
+                <DropdownItem>
+                  Dapto
+                </DropdownItem>
+                <DropdownItem active={true}>
+                  Wollongong City
+                </DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Member Name
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem>Log Out</DropdownItem>
+              </DropdownMenu>
+            </UncontrolledDropdown>
           </Nav>
         </Collapse>
       </Container>
