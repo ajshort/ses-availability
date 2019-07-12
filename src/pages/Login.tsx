@@ -15,6 +15,8 @@ const Index: React.FC = () => {
             type="number"
             name="number"
             id="number"
+            value={number !== 0 ? number.toString() : ''}
+            onChange={e => setNumber(e.target.value ? e.target.valueAsNumber : 0)}
           />
         </FormGroup>
         <FormGroup>
@@ -29,10 +31,16 @@ const Index: React.FC = () => {
         </FormGroup>
         <FormGroup check className="mb-3">
           <Label check>
-            <Input type="checkbox" name="remember" /> Remember me?
+            <Input
+              type="checkbox"
+              name="remember"
+              checked={rememberMe}
+              onChange={e => setRememberMe(e.target.checked)}
+            />
+            Remember me?
           </Label>
         </FormGroup>
-        <Button type="submit" color="primary" size="lg" block>Log In</Button>
+        <Button type="submit" color="primary" block>Log In</Button>
       </Form>
     </Container>
   );
