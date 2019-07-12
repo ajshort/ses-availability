@@ -11,6 +11,12 @@
   max-width: 400px;
 }
 
+.member-availability-table {
+  th.shift {
+    text-align: center;
+  }
+}
+
 .shifts-select-table {
   label {
     display: block;
