@@ -3,7 +3,7 @@ import { Alert, Col, Container, Card, CardHeader, Row } from 'reactstrap';
 
 const Index: React.FC = () => (
   <Container className="my-3">
-    <Alert color="info">
+    <Alert color="info" fade={false}>
       Information about shift teams.
     </Alert>
     <Row>
