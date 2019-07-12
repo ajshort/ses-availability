@@ -257,9 +257,10 @@ interface MemberAvailabilityTableProps {
   availabilities: Array<Availability>;
   days: Array<Moment>;
   shifts: Array<Shift>;
+  toggleEditing: () => void;
 }
 
-const MemberAvailabilityTable: React.FC<MemberAvailabilityTableProps> = ({ availabilities, days, shifts }) => (
+const MemberAvailabilityTable: React.FC<MemberAvailabilityTableProps> = ({ availabilities, days, shifts, toggleEditing }) => (
   <Table className="member-availability-table">
     <thead>
       <tr>
@@ -272,7 +273,7 @@ const MemberAvailabilityTable: React.FC<MemberAvailabilityTableProps> = ({ avail
     <tfoot>
       <tr>
         <th colSpan={shifts.length + 1}>
-          <Button color="primary" className="mr-2">Edit Availability</Button>
+          <Button color="primary" className="mr-2" onClick={toggleEditing}>Edit Availability</Button>
           <Button color="secondary">Copy from Previous Week</Button>
         </th>
       </tr>
@@ -384,6 +385,7 @@ const Member: React.FC = () => {
           days={days}
           shifts={defaultShifts}
           availabilities={availabilities}
+          toggleEditing={toggleEditing}
         />
       </Container>
       <EditModal
