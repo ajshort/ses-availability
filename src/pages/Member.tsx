@@ -293,49 +293,65 @@ const MemberAvailabilityTable: React.FC<MemberAvailabilityTableProps> = ({ avail
           <tr key={day.unix()}>
             <td>{day.format('ddd D/M')}</td>
             <td colSpan={shifts.length} style={{ position: 'relative' }}>
-              {entries.map(entry => {
-                const dayFrom = Math.max(entry.from.unix(), from.unix());
-                const dayTo = Math.min(entry.to.unix(), to.unix());
-
-                const left = (100 * (dayFrom - from.unix()) / duration).toString() + '%';
-                const right = (100 - 100 * (dayTo - from.unix()) / duration).toString() + '%';
-
-                let color;
-
-                if (entry.storm === 'available' && entry.rescue === 'immediate') {
-                  color = 'success';
-                } else {
-                  color = 'danger';
-                }
-
-                return (
+              <>
+                {shifts.map((_, index) => (
                   <div
-                    className={`alert alert-${color} d-flex align-items-center justify-content-center`}
+                    className={index !== shifts.length - 1 ? 'border-right' : undefined}
                     style={{
-                      left,
-                      right,
-                      bottom: '0.5rem',
-                      top: '0.5rem',
-                      margin: 0,
+                      bottom: 0,
                       position: 'absolute',
+                      top: 0,
+                      left: (100 * (index / shifts.length)).toString() + '%',
+                      right: (100 - 100 * ((index + 1) / shifts.length)).toString() + '%',
+                      zIndex: 0,
                     }}
-                  >
-                    <StormBadge available={entry.storm} className="mr-1" />
-                    <RescueBadge available={entry.rescue} className="mr-1" />
-                    {entry.vehicle && (
-                      <Badge color="info" className="mr-1">
-                        <FaCarSide /> <span className="d-none d-md-inline">{entry.vehicle}</span>
-                      </Badge>
-                    )}
-                    {entry.note && (
-                      <Badge color="secondary">
-                        <FaInfo className="d-md-none" />
-                        <span className="d-none d-md-inline">{entry.note}</span>
-                      </Badge>
-                    )}
-                  </div>
-                );
-              })}
+                  />
+                ))}
+                {entries.map(entry => {
+                  const dayFrom = Math.max(entry.from.unix(), from.unix());
+                  const dayTo = Math.min(entry.to.unix(), to.unix());
+
+                  const left = (100 * (dayFrom - from.unix()) / duration).toString() + '%';
+                  const right = (100 - 100 * (dayTo - from.unix()) / duration).toString() + '%';
+
+                  let color;
+
+                  if (entry.storm === 'available' && entry.rescue === 'immediate') {
+                    color = 'success';
+                  } else {
+                    color = 'danger';
+                  }
+
+                  return (
+                    <div
+                      className={`alert alert-${color} d-flex align-items-center justify-content-center`}
+                      style={{
+                        left,
+                        right,
+                        bottom: '0.5rem',
+                        top: '0.5rem',
+                        margin: 0,
+                        position: 'absolute',
+                        zIndex: 1,
+                      }}
+                    >
+                      <StormBadge available={entry.storm} className="mr-1" />
+                      <RescueBadge available={entry.rescue} className="mr-1" />
+                      {entry.vehicle && (
+                        <Badge color="info" className="mr-1">
+                          <FaCarSide /> <span className="d-none d-md-inline">{entry.vehicle}</span>
+                        </Badge>
+                      )}
+                      {entry.note && (
+                        <Badge color="secondary">
+                          <FaInfo className="d-md-none" />
+                          <span className="d-none d-md-inline">{entry.note}</span>
+                        </Badge>
+                      )}
+                    </div>
+                  );
+                })}
+              </>
             </td>
           </tr>
         );
